@@ -6,6 +6,7 @@ import org.apache.hc.client5.http.classic.methods.HttpDelete;
 import org.apache.hc.client5.http.classic.methods.HttpGet;
 import org.apache.hc.client5.http.classic.methods.HttpPost;
 import org.apache.hc.client5.http.classic.methods.HttpPut;
+import org.apache.hc.core5.http.ClassicHttpResponse;
 import org.apache.hc.core5.http.Header;
 import org.apache.hc.core5.http.HttpStatus;
 import org.apache.hc.core5.http.io.entity.HttpEntities;
@@ -18,10 +19,14 @@ import java.io.InputStream;
 import static dev.mainardes.util.httpclient.util.ResponseUtils.isExpectedResponse;
 import static org.apache.hc.core5.http.ContentType.APPLICATION_JSON;
 
-public final class JaySonHTTPClient {
+public class JaySonHTTPClient {
 
-    private final HttpClient client;
-    private final ObjectMapper mapper;
+    private HttpClient client;
+    private ObjectMapper mapper;
+
+    public JaySonHTTPClient(HttpClient client){
+        this(client, new ObjectMapper());
+    }
 
     public JaySonHTTPClient(HttpClient client, ObjectMapper mapper){
         this.client = client;
@@ -103,13 +108,30 @@ public final class JaySonHTTPClient {
     }
 
     public <T> T doRequest(BasicClassicHttpRequest request, Class<T> responseType, int expectedStatus) throws IOException {
-        final var response = (BasicClassicHttpResponse)client.execute(request);
+        final var response = (ClassicHttpResponse)client.execute(request);
+
         if (isExpectedResponse(expectedStatus, APPLICATION_JSON, response)){
             try (final InputStream input = response.getEntity().getContent()){
                 return mapper.readValue(input, responseType);
             }
         }
         return null;
+    }
+
+    protected void setClient(HttpClient client) {
+        this.client = client;
+    }
+
+    public HttpClient getClient() {
+        return client;
+    }
+
+    protected void setMapper(ObjectMapper mapper) {
+        this.mapper = mapper;
+    }
+
+    public ObjectMapper getMapper() {
+        return mapper;
     }
 
 }

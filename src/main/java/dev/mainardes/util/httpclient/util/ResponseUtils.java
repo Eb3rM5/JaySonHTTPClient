@@ -3,7 +3,6 @@ package dev.mainardes.util.httpclient.util;
 import org.apache.hc.core5.http.ClassicHttpResponse;
 import org.apache.hc.core5.http.ContentType;
 import org.apache.hc.core5.http.HttpResponse;
-import org.apache.hc.core5.http.message.BasicClassicHttpResponse;
 
 public final class ResponseUtils {
 

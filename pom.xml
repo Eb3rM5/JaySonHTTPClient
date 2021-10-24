@@ -2,7 +2,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>dev.mainardes.util</groupId>
 	<artifactId>jaysonhttpclient</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0.0</version>
 	<name>JaySonHTTPClient</name>
 
     <properties>
@@ -24,4 +24,12 @@
             <version>2.12.2</version>
         </dependency>
     </dependencies>
+
+    <distributionManagement>
+        <repository>
+            <id>github</id>
+            <name>GitHub Eb3rM5 Apache Maven Packages</name>
+            <url>https://maven.pkg.github.com/Eb3rM5/JaySonHTTPClient</url>
+        </repository>
+    </distributionManagement>
 </project>
